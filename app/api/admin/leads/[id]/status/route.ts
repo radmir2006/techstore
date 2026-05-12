@@ -1,33 +1,21 @@
-export const dynamic = 'force-dynamic'
-
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
+
+export const dynamic = 'force-dynamic'
 
 export async function PATCH(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
-    const leadId = params.id
     const { status } = await request.json()
-
-    if (!status) {
-      return NextResponse.json({ error: 'Status is required' }, { status: 400 })
-    }
-
-    const validStatuses = ['NEW', 'IN_PROGRESS', 'CONFIRMED', 'CANCELLED', 'COMPLETED']
-    if (!validStatuses.includes(status)) {
-      return NextResponse.json({ error: 'Invalid status' }, { status: 400 })
-    }
-
     const lead = await prisma.lead.update({
-      where: { id: leadId },
-      data: { status: status as any }
+      where: { id: params.id },
+      data: { status },
     })
-
-    return NextResponse.json({ success: true, lead })
+    return NextResponse.json(lead)
   } catch (error) {
-    console.error('Lead status update error:', error)
-    return NextResponse.json({ error: 'Failed to update lead status' }, { status: 500 })
+    console.error('Update lead status error:', error)
+    return NextResponse.json({ error: 'Failed to update status' }, { status: 500 })
   }
 }

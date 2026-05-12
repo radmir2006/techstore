@@ -1,9 +1,9 @@
-export const dynamic = 'force-dynamic'
-
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 import { prisma } from '@/lib/prisma'
 import { rateLimit, getClientIp, getUserAgent } from '@/lib/rateLimit'
+
+export const dynamic = 'force-dynamic'
 
 const imeiSchema = z.object({
   imei: z.string().min(14, 'IMEI должен содержать минимум 14 цифр').max(17),

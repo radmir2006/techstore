@@ -1,9 +1,9 @@
-export const dynamic = 'force-dynamic'
-
 import { NextRequest, NextResponse } from 'next/server'
 import bcrypt from 'bcryptjs'
 import { z } from 'zod'
 import { prisma } from '@/lib/prisma'
+
+export const dynamic = 'force-dynamic'
 
 const registerSchema = z.object({
   name: z.string().min(2, 'Имя должно содержать минимум 2 символа').max(100),

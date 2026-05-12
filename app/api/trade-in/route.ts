@@ -1,9 +1,9 @@
-export const dynamic = 'force-dynamic'
-
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 import { prisma } from '@/lib/prisma'
 import { rateLimit, getClientIp, getUserAgent, normalizePhone } from '@/lib/rateLimit'
+
+export const dynamic = 'force-dynamic'
 
 const tradeInSchema = z.object({
   brand: z.string().min(1, 'Выберите бренд'),

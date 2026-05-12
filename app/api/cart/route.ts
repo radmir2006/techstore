@@ -1,9 +1,9 @@
-export const dynamic = 'force-dynamic'
-
 import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { prisma } from '@/lib/prisma'
 import { authOptions } from '@/lib/auth'
+
+export const dynamic = 'force-dynamic'
 
 async function getCart(userId: string | null, sessionId: string | null) {
   if (userId) {
