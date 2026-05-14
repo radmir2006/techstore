@@ -1,25 +1,19 @@
-# TechStore - Интернет-магазин электроники
+# TechStore
 
-Современный интернет-магазин техники Apple и Samsung на Next.js 14.
+E-commerce platform built with Next.js 14
 
-## Технологии
+## Tech Stack
 
-- **Frontend:** Next.js 14 (App Router), React, TypeScript, Tailwind CSS
-- **Backend:** Next.js API Routes, NextAuth.js
-- **Database:** PostgreSQL (Neon), Prisma ORM
-- **Deployment:** Railway, SpaceWeb VPS
+Next.js 14, React, TypeScript, Tailwind CSS, PostgreSQL, Prisma
 
-## Функционал
+## Features
 
-- Каталог товаров с фильтрацией и сортировкой
-- Карточки товаров с вариантами (цвет, память)
-- Корзина покупок
-- Избранное и сравнение товаров
-- Админ-панель для управления товарами
-- Система заявок (лиды)
-- Адаптивный дизайн
+- Product catalog with filters
+- Shopping cart
+- Admin panel
+- Responsive design
 
-## Установка
+## Setup
 
 ```bash
 npm install
@@ -28,30 +22,20 @@ npm run build
 npm start
 ```
 
-## Переменные окружения
+## Environment Variables
 
-```env
-DATABASE_URL=postgresql://...
-NEXTAUTH_SECRET=...
-NEXTAUTH_URL=https://your-domain.com
-ADMIN_EMAIL=admin@techstore.ru
-ADMIN_PASSWORD=admin123
-NEXT_PUBLIC_SITE_URL=https://your-domain.com
-NEXT_PUBLIC_SITE_NAME=TechStore
-```
+DATABASE_URL - PostgreSQL connection string
+NEXTAUTH_SECRET - Auth secret key
+NEXTAUTH_URL - Site URL
+ADMIN_EMAIL - Admin email
+ADMIN_PASSWORD - Admin password
+NEXT_PUBLIC_SITE_URL - Public site URL
+NEXT_PUBLIC_SITE_NAME - Site name
 
-## Деплой на Railway
+## Deploy
 
-1. Подключите репозиторий на https://railway.app/
-2. Добавьте переменные окружения
-3. Railway автоматически задеплоит проект
+Deploy on Railway with GitHub integration
 
-## Админ-панель
+## Admin
 
-Доступ: `/admin/login`
-- Email: admin@techstore.ru
-- Пароль: admin123
-
-## Лицензия
-
-MIT
+Login at /admin/login
