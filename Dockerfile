@@ -55,4 +55,4 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=40s --retries=3 \
 ENTRYPOINT ["dumb-init", "--"]
 
 # Start the app
-CMD ["npm", "start"]
+CMD ["node_modules/.bin/next", "start", "-p", "3000"]
