@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
+import { checkAdminAuth } from '@/lib/adminAuth'
 
 export const dynamic = 'force-dynamic'
 
@@ -7,6 +8,9 @@ export async function PATCH(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  const authError = checkAdminAuth(request)
+  if (authError) return authError
+
   try {
     const { status } = await request.json()
     const lead = await prisma.lead.update({

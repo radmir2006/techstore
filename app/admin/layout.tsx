@@ -37,43 +37,46 @@ export default function AdminLayout({
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [loading, setLoading] = useState(true)
+  const [adminEmail, setAdminEmail] = useState('')
   const pathname = usePathname()
   const router = useRouter()
 
   useEffect(() => {
-    // Максимально простая проверка аутентификации
-    try {
-      let isLoggedIn = false
-      
-      if (typeof window !== 'undefined') {
-        isLoggedIn = localStorage.getItem('admin_logged_in') === 'true'
-      }
-      
-      setIsAuthenticated(isLoggedIn)
-      setLoading(false)
-      
-      if (!isLoggedIn && pathname !== '/admin/login') {
+    const checkAuth = async () => {
+      try {
+        if (pathname === '/admin/login') {
+          setLoading(false)
+          return
+        }
+        const res = await fetch('/api/admin/auth/check', { cache: 'no-store' })
+        if (res.ok) {
+          setIsAuthenticated(true)
+          // Читаем email из cookie
+          const emailCookie = document.cookie
+            .split('; ')
+            .find(row => row.startsWith('admin_email='))
+            ?.split('=')[1]
+          if (emailCookie) setAdminEmail(decodeURIComponent(emailCookie))
+        } else {
+          setIsAuthenticated(false)
+          router.push('/admin/login')
+        }
+      } catch {
+        setIsAuthenticated(false)
         router.push('/admin/login')
-      }
-    } catch (error) {
-      console.error('Auth check error:', error)
-      setIsAuthenticated(false)
-      setLoading(false)
-      if (pathname !== '/admin/login') {
-        router.push('/admin/login')
+      } finally {
+        setLoading(false)
       }
     }
+    checkAuth()
   }, [pathname, router])
 
   const handleLogout = async () => {
     try {
-      if (typeof window !== 'undefined') {
-        localStorage.removeItem('admin_logged_in')
-      }
+      await fetch('/api/admin/auth/logout', { method: 'POST' })
       setIsAuthenticated(false)
       router.push('/admin/login')
-    } catch (error) {
-      console.error('Logout error:', error)
+    } catch {
       router.push('/admin/login')
     }
   }
@@ -149,6 +152,12 @@ export default function AdminLayout({
         </nav>
 
         <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-800">
+          {adminEmail && (
+            <div className="px-4 py-2 mb-2">
+              <p className="text-xs text-gray-500 mb-0.5">Вы вошли как</p>
+              <p className="text-sm text-gray-300 font-medium truncate">{adminEmail}</p>
+            </div>
+          )}
           <button
             onClick={handleLogout}
             className="flex items-center gap-3 px-4 py-3 w-full text-gray-400 hover:bg-gray-800 hover:text-white rounded-lg transition-colors"

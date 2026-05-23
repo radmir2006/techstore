@@ -13,6 +13,8 @@ interface Lead {
   email?: string
   comment?: string
   status: string
+  type?: string
+  source?: string
   totalAmount?: number
   managerNote?: string
   createdAt: string
@@ -33,7 +35,19 @@ interface LeadsData {
   page: number
 }
 
-const statusColors: Record<string, string> = {
+const typeLabels: Record<string, string> = {
+  cart: '🛒 Корзина',
+  'one-click': '⚡ Купить в 1 клик',
+  contact: '✉️ Контактная форма',
+  form: '📝 Форма',
+}
+
+const typeColors: Record<string, string> = {
+  cart: 'bg-blue-50 text-blue-700',
+  'one-click': 'bg-orange-50 text-orange-700',
+  contact: 'bg-purple-50 text-purple-700',
+  form: 'bg-gray-50 text-gray-700',
+}
   NEW: 'bg-blue-100 text-blue-800',
   IN_PROGRESS: 'bg-yellow-100 text-yellow-800',
   CONFIRMED: 'bg-green-100 text-green-800',
@@ -60,15 +74,16 @@ export default function AdminLeadsPage() {
   const [currentStatus, setCurrentStatus] = useState<string>('all')
   const [currentPage, setCurrentPage] = useState(1)
   const [updatingStatus, setUpdatingStatus] = useState<string | null>(null)
+  const [activeTab, setActiveTab] = useState<'leads' | 'tradein'>('leads')
 
   // Загрузка заявок
-  const loadLeads = useCallback(async (status = 'all', page = 1) => {
+  const loadLeads = useCallback(async (status = 'all', page = 1, tab = activeTab) => {
     try {
       setLoading(true)
-      
       const params = new URLSearchParams()
       if (status !== 'all') params.set('status', status)
       params.set('page', page.toString())
+      if (tab === 'tradein') params.set('type', 'tradein')
 
       const response = await fetch(`/api/admin/leads?${params}`)
       
@@ -91,8 +106,8 @@ export default function AdminLeadsPage() {
 
   // Загрузка при монтировании
   useEffect(() => {
-    loadLeads(currentStatus, currentPage)
-  }, [loadLeads, currentStatus, currentPage])
+    loadLeads(currentStatus, currentPage, activeTab)
+  }, [loadLeads, currentStatus, currentPage, activeTab])
 
   // Обновление статуса заявки
   const updateLeadStatus = useCallback(async (leadId: string, newStatus: string) => {
@@ -127,6 +142,12 @@ export default function AdminLeadsPage() {
   // Обработка смены фильтра
   const handleStatusFilter = useCallback((status: string) => {
     setCurrentStatus(status)
+    setCurrentPage(1)
+  }, [])
+
+  const handleTabChange = useCallback((tab: 'leads' | 'tradein') => {
+    setActiveTab(tab)
+    setCurrentStatus('all')
     setCurrentPage(1)
   }, [])
 
@@ -178,28 +199,39 @@ export default function AdminLeadsPage() {
         <span className="text-gray-500">Всего: {leadsData.total}</span>
       </div>
 
-      {/* Filters */}
+      {/* Tabs */}
+      <div className="flex gap-1 bg-gray-100 p-1 rounded-xl w-fit">
+        <button
+          onClick={() => handleTabChange('leads')}
+          className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+            activeTab === 'leads' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-700'
+          }`}
+        >
+          Заявки
+        </button>
+        <button
+          onClick={() => handleTabChange('tradein')}
+          className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+            activeTab === 'tradein' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-700'
+          }`}
+        >
+          Trade-in
+        </button>
+      </div>
+
+      {/* Filters — only for leads */}
+      {activeTab === 'leads' && (
       <div className="bg-white rounded-xl p-4">
         <div className="flex gap-2 flex-wrap">
-          <SafeButton
-            onClick={() => handleStatusFilter('all')}
-            variant={currentStatus === 'all' ? 'primary' : 'secondary'}
-            size="sm"
-          >
-            Все
-          </SafeButton>
+          <SafeButton onClick={() => handleStatusFilter('all')} variant={currentStatus === 'all' ? 'primary' : 'secondary'} size="sm">Все</SafeButton>
           {Object.entries(statusLabels).map(([value, label]) => (
-            <SafeButton
-              key={value}
-              onClick={() => handleStatusFilter(value)}
-              variant={currentStatus === value ? 'primary' : 'secondary'}
-              size="sm"
-            >
+            <SafeButton key={value} onClick={() => handleStatusFilter(value)} variant={currentStatus === value ? 'primary' : 'secondary'} size="sm">
               {label}
             </SafeButton>
           ))}
         </div>
       </div>
+      )}
 
       {/* Leads list */}
       <div className="bg-white rounded-xl overflow-hidden">
@@ -222,6 +254,11 @@ export default function AdminLeadsPage() {
                       <span className={`px-2 py-1 text-xs font-medium rounded-full ${statusColors[lead.status]}`}>
                         {statusLabels[lead.status]}
                       </span>
+                      {lead.type && typeLabels[lead.type] && (
+                        <span className={`px-2 py-1 text-xs font-medium rounded-full ${typeColors[lead.type] || 'bg-gray-50 text-gray-700'}`}>
+                          {typeLabels[lead.type]}
+                        </span>
+                      )}
                     </div>
                     <div className="flex items-center gap-4 text-sm text-gray-500">
                       <span className="flex items-center gap-1">
@@ -252,11 +289,7 @@ export default function AdminLeadsPage() {
                       <div key={i} className="flex items-center gap-2 text-sm">
                         <span className="text-gray-600">{item.quantity}×</span>
                         {item.product ? (
-                          <Link
-                            href={`/product/${item.product.slug}`}
-                            target="_blank"
-                            className="text-blue-600 hover:underline flex items-center gap-1"
-                          >
+                          <Link href={`/product/${item.product.slug}`} target="_blank" className="text-blue-600 hover:underline flex items-center gap-1">
                             {item.product.name}
                             <ExternalLink className="w-3 h-3" />
                           </Link>
@@ -265,6 +298,21 @@ export default function AdminLeadsPage() {
                         )}
                       </div>
                     ))}
+                  </div>
+                )}
+
+                {/* Trade-in details */}
+                {(lead as any).tradeInDetails && (
+                  <div className="mb-3 bg-amber-50 rounded-lg p-3 text-sm">
+                    <p className="font-medium text-amber-800 mb-1">Устройство для Trade-in:</p>
+                    <p className="text-amber-700">
+                      {(lead as any).tradeInDetails.brand} {(lead as any).tradeInDetails.model}
+                      {(lead as any).tradeInDetails.memory && ` · ${(lead as any).tradeInDetails.memory}`}
+                      {' · '}{(lead as any).tradeInDetails.condition}
+                    </p>
+                    {(lead as any).tradeInDetails.estimatedPrice && (
+                      <p className="text-amber-700 mt-1">Оценка: {(lead as any).tradeInDetails.estimatedPrice}</p>
+                    )}
                   </div>
                 )}
 

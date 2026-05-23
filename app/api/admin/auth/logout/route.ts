@@ -1,0 +1,10 @@
+import { NextResponse } from 'next/server'
+
+export const dynamic = 'force-dynamic'
+
+export async function POST() {
+  const response = NextResponse.json({ ok: true })
+  response.cookies.set('admin_session', '', { httpOnly: true, maxAge: 0, path: '/' })
+  response.cookies.set('admin_email', '', { httpOnly: false, maxAge: 0, path: '/' })
+  return response
+}

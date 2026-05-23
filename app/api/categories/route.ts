@@ -12,6 +12,20 @@ export async function GET() {
         children: {
           where: { isActive: true },
           orderBy: { sortOrder: 'asc' },
+          include: {
+            products: {
+              where: { isActive: true },
+              include: { images: { orderBy: { sortOrder: 'asc' }, take: 1 } },
+              orderBy: { sortOrder: 'asc' },
+              take: 8,
+            },
+          },
+        },
+        products: {
+          where: { isActive: true },
+          include: { images: { orderBy: { sortOrder: 'asc' }, take: 1 } },
+          orderBy: { sortOrder: 'asc' },
+          take: 8,
         },
         _count: {
           select: { products: { where: { isActive: true } } },
@@ -22,7 +36,7 @@ export async function GET() {
 
     const rootCategories = categories.filter(c => !c.parentId)
 
-    return NextResponse.json(rootCategories)
+    return NextResponse.json({ categories: rootCategories })
   } catch (error) {
     console.error('Categories fetch error:', error)
     return NextResponse.json({ error: 'Failed to fetch categories' }, { status: 500 })

@@ -1,9 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
+import { checkAdminAuth } from '@/lib/adminAuth'
 
 export const dynamic = 'force-dynamic'
 
 export async function GET(request: NextRequest) {
+  const authError = checkAdminAuth(request)
+  if (authError) return authError
   try {
     const searchParams = request.nextUrl.searchParams
     const search = searchParams.get('search')
@@ -67,6 +70,8 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  const authError = checkAdminAuth(request)
+  if (authError) return authError
   try {
     const data = await request.json()
     

@@ -144,8 +144,8 @@ export default function EditProductPage() {
 
   useEffect(() => {
     // Загрузка категорий и брендов
-    fetch('/api/categories').then(r => r.json()).then(setCategories).catch(() => setCategories([]))
-    fetch('/api/brands').then(r => r.json()).then(setBrands).catch(() => setBrands([]))
+    fetch('/api/categories').then(r => r.json()).then(d => setCategories(d.categories || d || [])).catch(() => setCategories([]))
+    fetch('/api/brands').then(r => r.json()).then(d => setBrands(Array.isArray(d) ? d : (d.brands || []))).catch(() => setBrands([]))
     
     // Загрузка товара
     fetchProduct()

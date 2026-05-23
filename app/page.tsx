@@ -20,8 +20,6 @@ async function getHomeData() {
     banners,
     featuredProducts,
     newProducts,
-    hitProducts,
-    reviews,
   ] = await Promise.all([
     prisma.category.findMany({
       where: { isActive: true, parentId: null },
@@ -49,24 +47,6 @@ async function getHomeData() {
       },
       orderBy: { createdAt: 'desc' },
       take: 8,
-    }),
-    prisma.product.findMany({
-      where: { isActive: true, isHit: true },
-      include: {
-        images: { orderBy: { sortOrder: 'asc' } },
-        variants: { select: { color: true, colorCode: true, memory: true, stock: true } },
-      },
-      orderBy: { viewCount: 'desc' },
-      take: 8,
-    }),
-    prisma.review.findMany({
-      where: { isPublished: true },
-      include: {
-        images: true,
-        product: { select: { name: true, slug: true } },
-      },
-      orderBy: { createdAt: 'desc' },
-      take: 6,
     }),
   ])
 
@@ -108,26 +88,6 @@ async function getHomeData() {
       variants: p.variants,
       isNew: p.isNew,
     })),
-    hitProducts: hitProducts.map(p => ({
-      id: p.id,
-      name: p.name,
-      slug: p.slug,
-      price: Number(p.price),
-      oldPrice: p.oldPrice ? Number(p.oldPrice) : null,
-      images: p.images,
-      variants: p.variants,
-      isHit: p.isHit,
-    })),
-    reviews: reviews.map(r => ({
-      id: r.id,
-      authorName: r.authorName,
-      rating: r.rating,
-      title: r.title,
-      text: r.text,
-      images: r.images,
-      product: r.product,
-      createdAt: r.createdAt.toISOString(),
-    })),
   }
 }
 
@@ -148,8 +108,8 @@ export default async function HomePage() {
         )}
 
         {/* Categories */}
-        <section className="container-custom py-8 md:py-12 mt-6 md:mt-8">
-          <h2 className="section-title mb-6">Категории</h2>
+        <section className="container-custom py-4 md:py-6">
+          <h2 className="section-title mb-4">Категории</h2>
           <CategoryGrid categories={data.categories} />
         </section>
 
@@ -186,18 +146,7 @@ export default async function HomePage() {
           <ImeiCheckBlock />
         </LazySection>
 
-        {/* Hit Products */}
-        {data.hitProducts.length > 0 && (
-          <LazySection 
-            className="container-custom py-8 md:py-12 mt-6 md:mt-8"
-            fallback={<ProductGridSkeleton count={8} />}
-          >
-            <ProductGrid 
-              products={data.hitProducts} 
-              title="Хиты продаж"
-            />
-          </LazySection>
-        )}
+        {/* Hit Products removed */}
 
         {/* Features */}
         <LazySection className="container-custom py-8 md:py-12 mt-6 md:mt-8">

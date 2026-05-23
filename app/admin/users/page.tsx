@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
-import { Search, Users } from 'lucide-react'
+import { Search, Users, ChevronDown } from 'lucide-react'
 import toast from 'react-hot-toast'
 
 interface User {
@@ -36,6 +36,7 @@ export default function AdminUsersPage() {
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
   const [role, setRole] = useState('all')
+  const [changingRole, setChangingRole] = useState<string | null>(null)
 
   const loadUsers = useCallback(async (s = search, r = role, p = page) => {
     try {
@@ -44,7 +45,6 @@ export default function AdminUsersPage() {
       if (s) params.set('search', s)
       if (r !== 'all') params.set('role', r)
       params.set('page', p.toString())
-
       const res = await fetch(`/api/admin/users?${params}`)
       if (!res.ok) throw new Error()
       const data = await res.json()
@@ -67,10 +67,28 @@ export default function AdminUsersPage() {
     loadUsers(search, role, 1)
   }
 
-  const handleRoleChange = (r: string) => {
+  const handleRoleFilter = (r: string) => {
     setRole(r)
     setPage(1)
     loadUsers(search, r, 1)
+  }
+
+  const handleChangeRole = async (userId: string, newRole: string) => {
+    setChangingRole(userId)
+    try {
+      const res = await fetch('/api/admin/users', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId, role: newRole }),
+      })
+      if (!res.ok) throw new Error()
+      setUsers(prev => prev.map(u => u.id === userId ? { ...u, role: newRole } : u))
+      toast.success(`Роль изменена на "${roleLabels[newRole]}"`)
+    } catch {
+      toast.error('Ошибка при изменении роли')
+    } finally {
+      setChangingRole(null)
+    }
   }
 
   return (
@@ -97,10 +115,9 @@ export default function AdminUsersPage() {
             Найти
           </button>
         </form>
-
         <select
           value={role}
-          onChange={e => handleRoleChange(e.target.value)}
+          onChange={e => handleRoleFilter(e.target.value)}
           className="px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-gray-900"
         >
           <option value="all">Все роли</option>
@@ -131,6 +148,7 @@ export default function AdminUsersPage() {
                   <th className="text-left px-4 py-3 text-xs font-medium text-gray-500 uppercase">Заявки</th>
                   <th className="text-left px-4 py-3 text-xs font-medium text-gray-500 uppercase">Избранное</th>
                   <th className="text-left px-4 py-3 text-xs font-medium text-gray-500 uppercase">Дата регистрации</th>
+                  <th className="text-left px-4 py-3 text-xs font-medium text-gray-500 uppercase">Действия</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100">
@@ -160,6 +178,22 @@ export default function AdminUsersPage() {
                     <td className="px-4 py-3 text-sm text-gray-400">
                       {new Date(user.createdAt).toLocaleDateString('ru-RU')}
                     </td>
+                    <td className="px-4 py-3">
+                      <div className="relative">
+                        <select
+                          value={user.role}
+                          onChange={e => handleChangeRole(user.id, e.target.value)}
+                          disabled={changingRole === user.id}
+                          className="appearance-none pl-3 pr-8 py-1.5 text-xs border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-gray-900 disabled:opacity-50 cursor-pointer"
+                        >
+                          <option value="USER">Покупатель</option>
+                          <option value="ADMIN">Администратор</option>
+                          <option value="MANAGER">Менеджер</option>
+                          <option value="CONTENT_MANAGER">Контент-менеджер</option>
+                        </select>
+                        <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 w-3 h-3 text-gray-400 pointer-events-none" />
+                      </div>
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -167,28 +201,19 @@ export default function AdminUsersPage() {
           </div>
         )}
 
-        {/* Пагинация */}
         {pages > 1 && (
           <div className="px-4 py-3 border-t border-gray-200 flex items-center justify-between">
             <span className="text-sm text-gray-500">Страница {page} из {pages}</span>
             <div className="flex gap-2">
-              <button
-                onClick={() => { const p = page - 1; setPage(p); loadUsers(search, role, p) }}
-                disabled={page <= 1}
-                className="px-3 py-1 text-sm border border-gray-200 rounded-lg disabled:opacity-40 hover:bg-gray-50"
-              >
-                ←
-              </button>
-              <button
-                onClick={() => { const p = page + 1; setPage(p); loadUsers(search, role, p) }}
-                disabled={page >= pages}
-                className="px-3 py-1 text-sm border border-gray-200 rounded-lg disabled:opacity-40 hover:bg-gray-50"
-              >
-                →
-              </button>
+              <button onClick={() => { const p = page - 1; setPage(p); loadUsers(search, role, p) }} disabled={page <= 1} className="px-3 py-1 text-sm border border-gray-200 rounded-lg disabled:opacity-40 hover:bg-gray-50">←</button>
+              <button onClick={() => { const p = page + 1; setPage(p); loadUsers(search, role, p) }} disabled={page >= pages} className="px-3 py-1 text-sm border border-gray-200 rounded-lg disabled:opacity-40 hover:bg-gray-50">→</button>
             </div>
           </div>
         )}
+      </div>
+
+      <div className="mt-4 p-4 bg-blue-50 rounded-xl border border-blue-100 text-sm text-blue-700">
+        <strong>Как дать доступ в админку:</strong> назначьте пользователю роль «Администратор» через выпадающий список. После этого он сможет войти в /admin/login со своим email и паролем от сайта.
       </div>
     </div>
   )

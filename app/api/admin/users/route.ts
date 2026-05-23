@@ -1,9 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
+import { checkAdminAuth } from '@/lib/adminAuth'
 
 export const dynamic = 'force-dynamic'
 
 export async function GET(request: NextRequest) {
+  const authError = checkAdminAuth(request)
+  if (authError) return authError
   try {
     const searchParams = request.nextUrl.searchParams
     const search = searchParams.get('search') || ''
@@ -53,6 +56,27 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     console.error('Users API error:', error)
     return NextResponse.json({ error: 'Ошибка загрузки пользователей' }, { status: 500 })
+  }
+}
+
+export async function PATCH(request: NextRequest) {
+  const authError = checkAdminAuth(request)
+  if (authError) return authError
+  try {
+    const { userId, role } = await request.json()
+    const validRoles = ['USER', 'ADMIN', 'MANAGER', 'CONTENT_MANAGER']
+    if (!userId || !validRoles.includes(role)) {
+      return NextResponse.json({ error: 'Неверные данные' }, { status: 400 })
+    }
+    const user = await prisma.user.update({
+      where: { id: userId },
+      data: { role },
+      select: { id: true, name: true, email: true, role: true },
+    })
+    return NextResponse.json(user)
+  } catch (error) {
+    console.error('Update user role error:', error)
+    return NextResponse.json({ error: 'Ошибка обновления роли' }, { status: 500 })
   }
 }
 

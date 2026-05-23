@@ -63,18 +63,18 @@ function CatalogContent() {
   
   const slug = params.slug as string[]
   const slugMap: Record<string, string> = {
-    'smartphones': 'iphone',
-    'apple': 'iphone',
-    'tablets': 'ipad',
-    'laptops': 'macbook',
+    'smartphones': 'smartphones',
+    'apple': 'smartphones',
+    'tablets': 'tablets',
+    'laptops': 'laptops',
     'audio': 'airpods',
     'smart-home': 'apple-watch',
-    'iphone': 'iphone',
-    'ipad': 'ipad',
-    'macbook': 'macbook',
+    'iphone': 'smartphones',
+    'ipad': 'tablets',
+    'macbook': 'laptops',
     'airpods': 'airpods',
     'apple-watch': 'apple-watch',
-    'accessories': 'accessories',
+    'accessories': 'airpods',
   }
   const rawSlug = slug?.[slug.length - 1] || slug?.[0] || ''
   const categorySlug = slugMap[rawSlug] || rawSlug

@@ -39,13 +39,52 @@ export function ProductInfo({ product }: ProductInfoProps) {
   const router = useRouter()
   const { data: session } = useSession()
   const { addItem } = useCart()
-  const [selectedVariant, setSelectedVariant] = useState(product.variants[0]?.id || null)
+
+  // Independent color and memory selection
+  const uniqueColors = product.variants
+    .filter(v => v.color)
+    .reduce((acc, v) => {
+      if (!acc.find(c => c.color === v.color)) {
+        acc.push({ color: v.color!, colorCode: v.colorCode || null })
+      }
+      return acc
+    }, [] as Array<{ color: string; colorCode: string | null }>)
+
+  const uniqueMemories = Array.from(new Set(
+    product.variants.filter(v => v.memory).map(v => v.memory!)
+  ))
+
+  const uniqueSimTypes = Array.from(new Set(
+    product.variants.filter(v => v.simType).map(v => v.simType!)
+  ))
+
+  const [selectedColor, setSelectedColor] = useState<string | null>(
+    uniqueColors[0]?.color || null
+  )
+  const [selectedMemory, setSelectedMemory] = useState<string | null>(
+    uniqueMemories[0] || null
+  )
+  const [selectedSimType, setSelectedSimType] = useState<string | null>(
+    uniqueSimTypes[0] || null
+  )
   const [isAddingToCart, setIsAddingToCart] = useState(false)
   const [showOneClick, setShowOneClick] = useState(false)
   const [isFavorite, setIsFavorite] = useState(false)
   const [isInCompare, setIsInCompare] = useState(false)
 
-  const selectedVariantData = product.variants.find(v => v.id === selectedVariant)
+  // Find the best matching variant based on selected color + memory + simType
+  const selectedVariantData = product.variants.find(v => {
+    const colorMatch = !selectedColor || v.color === selectedColor
+    const memoryMatch = !selectedMemory || v.memory === selectedMemory
+    const simMatch = !selectedSimType || v.simType === selectedSimType
+    return colorMatch && memoryMatch && simMatch
+  }) || product.variants.find(v => {
+    // fallback: match at least color
+    return !selectedColor || v.color === selectedColor
+  }) || product.variants[0]
+
+  const selectedVariant = selectedVariantData?.id || null
+
   const currentPrice = selectedVariantData?.price || product.price
   const currentOldPrice = selectedVariantData?.oldPrice || product.oldPrice
   const hasDiscount = currentOldPrice && Number(currentOldPrice) > Number(currentPrice)
@@ -54,28 +93,15 @@ export function ProductInfo({ product }: ProductInfoProps) {
     : 0
   const inStock = (selectedVariantData?.stock ?? 0) > 0
 
-  // Get unique colors and memories
-  const uniqueColors = product.variants
-    .filter(v => v.color)
-    .reduce((acc, v) => {
-      const existing = acc.find(c => c.color === v.color)
-      if (!existing) {
-        acc.push({
-          color: v.color!,
-          colorCode: v.colorCode || null,
-          id: v.id,
-        })
-      }
-      return acc
-    }, [] as Array<{ color: string; colorCode: string | null; id: string }>)
-  
-  const uniqueMemories = Array.from(new Set(
-    product.variants.filter(v => v.memory).map(v => v.memory!)
-  ))
+  // Check which memories are available for selected color
+  const availableMemoriesForColor = selectedColor
+    ? new Set(product.variants.filter(v => v.color === selectedColor && v.memory).map(v => v.memory!))
+    : new Set(uniqueMemories)
 
-  const uniqueSimTypes = Array.from(new Set(
-    product.variants.filter(v => v.simType).map(v => v.simType!)
-  ))
+  // Check which colors are available for selected memory
+  const availableColorsForMemory = selectedMemory
+    ? new Set(product.variants.filter(v => v.memory === selectedMemory && v.color).map(v => v.color!))
+    : new Set(uniqueColors.map(c => c.color))
 
   // Check if product is in favorites or compare on mount
   useEffect(() => {
@@ -266,57 +292,70 @@ export function ProductInfo({ product }: ProductInfoProps) {
       {/* Variants */}
       {product.variants.length > 0 && (
         <div className="space-y-4">
-          {/* Memory */}
-          {uniqueMemories.length > 0 && (
+          {/* Color */}
+          {uniqueColors.length > 0 && (
             <div>
-              <p className="text-sm font-medium mb-2">Память</p>
+              <p className="text-sm font-medium mb-2">
+                Цвет: <span className="font-normal text-gray-600">{selectedColor || '—'}</span>
+              </p>
               <div className="flex flex-wrap gap-2">
-                {uniqueMemories.map(memory => (
-                  <button
-                    key={memory}
-                    onClick={() => {
-                      const variant = product.variants.find(v => v.memory === memory)
-                      if (variant) setSelectedVariant(variant.id)
-                    }}
-                    className={cn(
-                      "px-4 py-2 text-sm rounded-lg border transition-colors",
-                      product.variants.find(v => v.memory === memory && v.id === selectedVariant)
-                        ? "bg-gray-900 text-white border-gray-900"
-                        : "bg-white border-gray-200 hover:border-gray-300"
-                    )}
-                  >
-                    {memory}
-                  </button>
-                ))}
+                {uniqueColors.map(({ color, colorCode }) => {
+                  const available = availableColorsForMemory.has(color)
+                  return (
+                    <button
+                      key={color}
+                      onClick={() => setSelectedColor(color)}
+                      disabled={!available}
+                      className={cn(
+                        "flex items-center gap-2 px-4 py-2 text-sm rounded-lg border transition-colors",
+                        color === selectedColor
+                          ? "bg-gray-900 text-white border-gray-900"
+                          : available
+                            ? "bg-white border-gray-200 hover:border-gray-400"
+                            : "bg-gray-50 border-gray-100 text-gray-300 cursor-not-allowed"
+                      )}
+                    >
+                      {colorCode && (
+                        <span
+                          className="w-4 h-4 rounded-full border border-gray-300 flex-shrink-0"
+                          style={{ backgroundColor: colorCode }}
+                        />
+                      )}
+                      {color}
+                    </button>
+                  )
+                })}
               </div>
             </div>
           )}
 
-          {/* Color */}
-          {uniqueColors.length > 0 && (
+          {/* Memory */}
+          {uniqueMemories.length > 0 && (
             <div>
-              <p className="text-sm font-medium mb-2">Цвет</p>
+              <p className="text-sm font-medium mb-2">
+                Память: <span className="font-normal text-gray-600">{selectedMemory || '—'}</span>
+              </p>
               <div className="flex flex-wrap gap-2">
-                {uniqueColors.map(({ color, colorCode, id }) => (
-                  <button
-                    key={id}
-                    onClick={() => setSelectedVariant(id)}
-                    className={cn(
-                      "flex items-center gap-2 px-4 py-2 text-sm rounded-lg border transition-colors",
-                      id === selectedVariant
-                        ? "bg-gray-900 text-white border-gray-900"
-                        : "bg-white border-gray-200 hover:border-gray-300"
-                    )}
-                  >
-                    {colorCode && (
-                      <span 
-                        className="w-4 h-4 rounded-full border border-gray-300"
-                        style={{ backgroundColor: colorCode }}
-                      />
-                    )}
-                    {color}
-                  </button>
-                ))}
+                {uniqueMemories.map(memory => {
+                  const available = availableMemoriesForColor.has(memory)
+                  return (
+                    <button
+                      key={memory}
+                      onClick={() => setSelectedMemory(memory)}
+                      disabled={!available}
+                      className={cn(
+                        "px-4 py-2 text-sm rounded-lg border transition-colors",
+                        memory === selectedMemory
+                          ? "bg-gray-900 text-white border-gray-900"
+                          : available
+                            ? "bg-white border-gray-200 hover:border-gray-400"
+                            : "bg-gray-50 border-gray-100 text-gray-300 cursor-not-allowed line-through"
+                      )}
+                    >
+                      {memory}
+                    </button>
+                  )
+                })}
               </div>
             </div>
           )}
@@ -329,13 +368,10 @@ export function ProductInfo({ product }: ProductInfoProps) {
                 {uniqueSimTypes.map(simType => (
                   <button
                     key={simType}
-                    onClick={() => {
-                      const variant = product.variants.find(v => v.simType === simType)
-                      if (variant) setSelectedVariant(variant.id)
-                    }}
+                    onClick={() => setSelectedSimType(simType)}
                     className={cn(
                       "px-4 py-2 text-sm rounded-lg border transition-colors",
-                      product.variants.find(v => v.simType === simType && v.id === selectedVariant)
+                      simType === selectedSimType
                         ? "bg-gray-900 text-white border-gray-900"
                         : "bg-white border-gray-200 hover:border-gray-300"
                     )}

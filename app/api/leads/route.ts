@@ -174,42 +174,7 @@ async function sendLeadNotification(lead: any) {
   console.log('New lead:', lead.id)
 }
 
-export async function GET(request: NextRequest) {
-  // Admin endpoint to list leads
-  const { searchParams } = new URL(request.url)
-  const status = searchParams.get('status')
-  const page = parseInt(searchParams.get('page') || '1')
-  const limit = parseInt(searchParams.get('limit') || '20')
-  
-  const where = status ? { status: status as any } : {}
-  
-  const [leads, total] = await Promise.all([
-    prisma.lead.findMany({
-      where,
-      include: {
-        items: {
-          include: {
-            product: {
-              select: { name: true, slug: true },
-            },
-          },
-        },
-      },
-      orderBy: { createdAt: 'desc' },
-      skip: (page - 1) * limit,
-      take: limit,
-    }),
-    prisma.lead.count({ where }),
-  ])
-  
-  return NextResponse.json({
-    leads,
-    pagination: {
-      page,
-      limit,
-      total,
-      pages: Math.ceil(total / limit),
-    },
-  })
+export async function GET() {
+  return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
 }
 
