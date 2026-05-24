@@ -5,6 +5,10 @@ import Link from 'next/link'
 import { Package, ShoppingCart, Users, TrendingUp, Clock } from 'lucide-react'
 import { LoadingSkeleton } from '@/components/LoadingSkeleton'
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 interface Stats {
   productsCount: number
   activeProductsCount: number
