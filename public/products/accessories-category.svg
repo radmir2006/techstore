@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1c1c1e"/>
+      <stop offset="100%" style="stop-color:#2c2c2e"/>
+    </linearGradient>
+    <pattern id="w2" x="0" y="0" width="16" height="16" patternUnits="userSpaceOnUse">
+      <rect width="16" height="16" fill="#1c1c1e"/>
+      <rect x="0" y="0" width="8" height="7" fill="#252528" rx="1"/>
+      <rect x="8" y="8" width="8" height="7" fill="#252528" rx="1"/>
+      <rect x="0" y="8" width="7" height="8" fill="#202022" rx="1"/>
+      <rect x="8" y="0" width="7" height="8" fill="#202022" rx="1"/>
+    </pattern>
+  </defs>
+  <rect width="600" height="400" fill="url(#bg)"/>
+  <rect x="55" y="55" width="185" height="295" rx="32" fill="url(#w2)" opacity="0.95"/>
+  <rect x="55" y="55" width="185" height="295" rx="32" fill="none" stroke="#3a3a3e" stroke-width="1.5"/>
+  <rect x="75" y="75" width="85" height="85" rx="20" fill="#111113"/>
+  <circle cx="107" cy="112" r="17" fill="#050507"/>
+  <circle cx="143" cy="112" r="17" fill="#050507"/>
+  <circle cx="125" cy="143" r="13" fill="#050507"/>
+  <text x="147" y="295" font-family="Arial" font-size="13" font-weight="300" letter-spacing="5" fill="#fff" text-anchor="middle" opacity="0.55">PITAKA</text>
+  <rect x="310" y="70" width="185" height="295" rx="32" fill="url(#w2)" opacity="0.7" transform="rotate(-10 402 217)"/>
+  <rect x="310" y="70" width="185" height="295" rx="32" fill="none" stroke="#3a3a3e" stroke-width="1.5" transform="rotate(-10 402 217)"/>
+  <text x="300" y="375" font-family="'Helvetica Neue',Arial,sans-serif" font-size="17" font-weight="300" letter-spacing="5" fill="#ffffff" text-anchor="middle" opacity="0.65">Аксессуары</text>
+</svg>
