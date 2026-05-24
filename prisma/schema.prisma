@@ -135,6 +135,7 @@ model Product {
   isFeatured      Boolean                 @default(false)
   isNew           Boolean                 @default(false)
   isHit           Boolean                 @default(false)
+  inStock         Boolean                 @default(true)
   seoTitle        String?
   seoDesc         String?
   seoText         String?                 @db.Text

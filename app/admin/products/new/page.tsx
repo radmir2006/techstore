@@ -23,6 +23,7 @@ interface FormData {
   isNew: boolean
   isFeatured: boolean
   isHit: boolean
+  inStock: boolean
   seoTitle: string
   seoDesc: string
 }
@@ -71,6 +72,7 @@ export default function NewProductPage() {
     isNew: false,
     isFeatured: false,
     isHit: false,
+    inStock: true,
     seoTitle: '',
     seoDesc: '',
   })
@@ -586,6 +588,15 @@ export default function NewProductPage() {
                 className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
               />
               <span className="text-sm font-medium">Активен</span>
+            </label>
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={formData.inStock}
+                onChange={(e) => setFormData({...formData, inStock: e.target.checked})}
+                className="rounded border-gray-300 text-green-600 focus:ring-green-500"
+              />
+              <span className="text-sm font-medium">В наличии</span>
             </label>
             <label className="flex items-center gap-2 cursor-pointer">
               <input

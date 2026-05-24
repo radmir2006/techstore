@@ -77,6 +77,7 @@ async function getHomeData() {
       isFeatured: p.isFeatured,
       isNew: p.isNew,
       isHit: p.isHit,
+      inStock: p.inStock,
     })),
     newProducts: newProducts.map(p => ({
       id: p.id,
@@ -87,6 +88,7 @@ async function getHomeData() {
       images: p.images,
       variants: p.variants,
       isNew: p.isNew,
+      inStock: p.inStock,
     })),
   }
 }

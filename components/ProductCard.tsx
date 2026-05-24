@@ -17,6 +17,7 @@ interface ProductCardProps {
     variants?: { color?: string | null; colorCode?: string | null; memory?: string | null; stock: number }[]
     isNew?: boolean
     isHit?: boolean
+    inStock?: boolean
     stock?: number
   }
   showQuickBuy?: boolean
@@ -37,7 +38,10 @@ export const ProductCard = memo(function ProductCard({ product, showQuickBuy = t
   const discountPercent = hasDiscount 
     ? Math.round((1 - Number(product.price) / Number(product.oldPrice!)) * 100) 
     : 0
-  const inStock = (product.stock ?? product.variants?.reduce((sum, v) => sum + v.stock, 0) ?? 0) > 0
+  // Проверяем поле inStock, если оно есть - используем его, иначе проверяем stock вариантов
+  const inStock = product.inStock !== undefined 
+    ? product.inStock 
+    : (product.stock ?? product.variants?.reduce((sum, v) => sum + v.stock, 0) ?? 0) > 0
 
   const handleAddToCart = async (e: React.MouseEvent) => {
     e.preventDefault()
