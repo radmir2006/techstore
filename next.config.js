@@ -1,30 +1,22 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Force rebuild - version 2.0
+  generateBuildId: async () => {
+    return `build-${Date.now()}`
+  },
   images: {
+    domains: ['localhost'],
     remotePatterns: [
-      { protocol: 'https', hostname: 'res.cloudinary.com' },
-      { protocol: 'https', hostname: 'images.unsplash.com' },
-      { protocol: 'https', hostname: 'via.placeholder.com' },
+      {
+        protocol: 'https',
+        hostname: '**',
+      },
     ],
-    formats: ['image/avif', 'image/webp'],
-    deviceSizes: [640, 750, 828, 1080, 1200],
-    imageSizes: [64, 128, 256, 384, 400, 512],
-    minimumCacheTTL: 60 * 60 * 24 * 30,
-    dangerouslyAllowSVG: true,
-    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
-  experimental: {
-    serverComponentsExternalPackages: ['@prisma/client', 'bcryptjs'],
-    optimizePackageImports: ['lucide-react'],
-  },
-  poweredByHeader: false,
-  compress: true,
-  // Отключаем статическую оптимизацию для страниц с БД
-  typescript: {
-    ignoreBuildErrors: false,
-  },
-  eslint: {
-    ignoreDuringBuilds: false,
+  // Disable caching for development
+  onDemandEntries: {
+    maxInactiveAge: 25 * 1000,
+    pagesBufferLength: 2,
   },
 }
 
