@@ -41,7 +41,7 @@ export const CategoryGrid = memo(function CategoryGrid({ categories }: CategoryG
         <Link
           key={category.id}
           href={`/catalog/${category.slug}`}
-          className="group relative bg-gray-100 rounded-2xl overflow-hidden aspect-square"
+          className="group relative bg-white rounded-2xl overflow-hidden aspect-square border border-gray-200 hover:border-gray-300 transition-all hover:shadow-md"
         >
           {category.image ? (
             <OptimizedImage
@@ -56,8 +56,8 @@ export const CategoryGrid = memo(function CategoryGrid({ categories }: CategoryG
           ) : (
             <div className="absolute inset-0 bg-gradient-to-br from-gray-200 to-gray-100" />
           )}
-          <div className="absolute bottom-0 left-0 right-0 p-3 md:p-4 bg-gradient-to-t from-black/80 to-transparent">
-            <h3 className="text-white text-sm md:text-base font-medium">
+          <div className="absolute bottom-0 left-0 right-0 p-3 md:p-4">
+            <h3 className="text-gray-900 text-sm md:text-base font-semibold drop-shadow-sm">
               {category.name}
             </h3>
           </div>
