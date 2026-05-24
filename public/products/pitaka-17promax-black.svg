@@ -1,65 +1,103 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="760" height="770" viewBox="0 0 760 770">
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="780" viewBox="0 0 560 780">
   <defs>
-    <pattern id="weave" x="0" y="0" width="16" height="16" patternUnits="userSpaceOnUse">
-      <rect width="16" height="16" fill="#1c1c1e"/>
-      <rect x="0" y="0" width="8" height="7" fill="#252528" rx="1"/>
-      <rect x="8" y="8" width="8" height="7" fill="#252528" rx="1"/>
-      <rect x="0" y="8" width="7" height="8" fill="#202022" rx="1"/>
-      <rect x="8" y="0" width="7" height="8" fill="#202022" rx="1"/>
-      <line x1="0" y1="0" x2="8" y2="7" stroke="#2e2e32" stroke-width="0.4"/>
-      <line x1="8" y1="8" x2="16" y2="15" stroke="#2e2e32" stroke-width="0.4"/>
-    </pattern>
-    <linearGradient id="topShine" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.07"/>
-      <stop offset="100%" style="stop-color:#000000;stop-opacity:0.1"/>
+    <pattern id="wTop17" x="0" y="0" width="6" height="6" patternUnits="userSpaceOnUse">
+    <rect width="6" height="6" fill="#1a1a1c"/>
+    <rect x="0" y="0" width="3" height="3" fill="#2a2a2e" opacity="0.85"/>
+    <rect x="3" y="3" width="3" height="3" fill="#2a2a2e" opacity="0.85"/>
+  </pattern>
+    <pattern id="wMid17" x="0" y="0" width="6" height="6" patternUnits="userSpaceOnUse">
+    <rect width="6" height="6" fill="#6a4820"/>
+    <rect x="0" y="0" width="3" height="3" fill="#b07838" opacity="0.85"/>
+    <rect x="3" y="3" width="3" height="3" fill="#b07838" opacity="0.85"/>
+  </pattern>
+    <pattern id="wBot17" x="0" y="0" width="6" height="6" patternUnits="userSpaceOnUse">
+    <rect width="6" height="6" fill="#8a3810"/>
+    <rect x="0" y="0" width="3" height="3" fill="#c05820" opacity="0.85"/>
+    <rect x="3" y="3" width="3" height="3" fill="#c05820" opacity="0.85"/>
+  </pattern>
+
+    <linearGradient id="grad17" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#1a1a1c"/>
+      <stop offset="35%"  stop-color="#1e1e20"/>
+      <stop offset="50%"  stop-color="#7a5828"/>
+      <stop offset="65%"  stop-color="#9a4818"/>
+      <stop offset="80%"  stop-color="#c05820"/>
+      <stop offset="100%" stop-color="#1a1a1c"/>
     </linearGradient>
-    <linearGradient id="sideShine" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.08"/>
-      <stop offset="100%" style="stop-color:#000000;stop-opacity:0.15"/>
-    </linearGradient>
-    <filter id="dropShadow">
-      <feDropShadow dx="0" dy="10" stdDeviation="20" flood-color="#000000" flood-opacity="0.45"/>
+
+    <clipPath id="clip17">
+      <rect x="20" y="20" width="520" height="740" rx="52" ry="52"/>
+    </clipPath>
+
+    <filter id="shadow17">
+      <feDropShadow dx="0" dy="8" stdDeviation="18" flood-color="#000" flood-opacity="0.35"/>
     </filter>
-    <linearGradient id="pageBg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#f2f2f2"/>
-      <stop offset="100%" style="stop-color:#e5e5e5"/>
-    </linearGradient>
   </defs>
-  <rect width="760" height="770" fill="url(#pageBg)"/>
-  <ellipse cx="380" cy="718" rx="155" ry="16" fill="#000" opacity="0.15"/>
-  <rect x="200" y="110" width="360" height="580" rx="52" ry="52" fill="url(#weave)" filter="url(#dropShadow)"/>
-  <rect x="200" y="110" width="360" height="580" rx="52" ry="52" fill="url(#sideShine)"/>
-  <rect x="200" y="110" width="360" height="580" rx="52" ry="52" fill="url(#topShine)"/>
-  <rect x="200" y="110" width="360" height="580" rx="52" ry="52" fill="none" stroke="#3a3a3e" stroke-width="1.5"/>
-  <rect x="228" y="138" width="158" height="145" rx="28" fill="#111113" stroke="#2a2a2e" stroke-width="1"/>
-  
-  <circle cx="295" cy="195" r="26" fill="#0a0a0c" stroke="#2c2c30" stroke-width="1.5"/>
-  <circle cx="295" cy="195" r="19" fill="#050507"/>
-  <circle cx="295" cy="195" r="12" fill="#0d0d10"/>
-  <circle cx="295" cy="195" r="6" fill="#1a1a1e"/>
-  <circle cx="290" cy="190" r="2.5" fill="#ffffff" opacity="0.12"/>
-  
-  <circle cx="355" cy="195" r="26" fill="#0a0a0c" stroke="#2c2c30" stroke-width="1.5"/>
-  <circle cx="355" cy="195" r="19" fill="#050507"/>
-  <circle cx="355" cy="195" r="12" fill="#0d0d10"/>
-  <circle cx="355" cy="195" r="6" fill="#1a1a1e"/>
-  <circle cx="350" cy="190" r="2.5" fill="#ffffff" opacity="0.12"/>
-  
-  <circle cx="325" cy="248" r="26" fill="#0a0a0c" stroke="#2c2c30" stroke-width="1.5"/>
-  <circle cx="325" cy="248" r="19" fill="#050507"/>
-  <circle cx="325" cy="248" r="12" fill="#0d0d10"/>
-  <circle cx="325" cy="248" r="6" fill="#1a1a1e"/>
-  <circle cx="320" cy="243" r="2.5" fill="#ffffff" opacity="0.12"/>
-  
-  <circle cx="368" cy="163" r="8" fill="#1a1a1c" stroke="#2a2a2e" stroke-width="1"/>
-  <circle cx="368" cy="163" r="5" fill="#222224"/>
-  <rect x="195" y="268" width="7" height="42" rx="3.5" fill="#161618" stroke="#2a2a2e" stroke-width="0.8"/>
-  <rect x="195" y="322" width="7" height="65" rx="3.5" fill="#161618" stroke="#2a2a2e" stroke-width="0.8"/>
-  <rect x="558" y="298" width="7" height="75" rx="3.5" fill="#161618" stroke="#2a2a2e" stroke-width="0.8"/>
-  <rect x="558" y="418" width="7" height="45" rx="3.5" fill="#1e1e22" stroke="#333338" stroke-width="0.8"/>
-  <text x="380" y="562" font-family="'Helvetica Neue',Arial,sans-serif" font-size="22" font-weight="300" letter-spacing="10" fill="#ffffff" text-anchor="middle" opacity="0.55">PITAKA</text>
-  <line x1="318" y1="577" x2="442" y2="577" stroke="#ffffff" stroke-width="0.5" opacity="0.2"/>
-  <circle cx="380" cy="622" r="30" fill="none" stroke="#333338" stroke-width="1.5" opacity="0.5"/>
-  <circle cx="380" cy="622" r="22" fill="none" stroke="#2a2a2e" stroke-width="1" opacity="0.35"/>
-  <rect x="353" y="672" width="54" height="10" rx="5" fill="#111113"/>
+
+  <rect width="560" height="780" fill="#ffffff"/>
+  <rect x="20" y="20" width="520" height="740" rx="52" fill="#000" opacity="0.15" transform="translate(4,10)"/>
+
+  <!-- Основа -->
+  <rect x="20" y="20" width="520" height="740" rx="52" fill="url(#grad17)" clip-path="url(#clip17)"/>
+
+  <!-- Плетение верх (тёмный) -->
+  <rect x="20" y="20" width="520" height="312" fill="url(#wTop17)" opacity="0.6" clip-path="url(#clip17)"/>
+  <!-- Плетение середина (бежевый/оранжевый) -->
+  <rect x="20" y="312" width="520" height="234" fill="url(#wMid17)" opacity="0.5" clip-path="url(#clip17)"/>
+  <!-- Плетение низ (тёмный) -->
+  <rect x="20" y="546" width="520" height="234" fill="url(#wTop17)" opacity="0.6" clip-path="url(#clip17)"/>
+
+  <!-- Горизонтальные полосы-переходы -->
+  <rect x="20" y="288.6" width="520" height="5"  fill="#5a3818" opacity="0.8" clip-path="url(#clip17)"/>
+  <rect x="20" y="300.3" width="520" height="4" fill="#7a5028" opacity="0.6" clip-path="url(#clip17)"/>
+  <path d="M20,292.5 20,292.5 26,297.5 32,292.5 38,297.5 44,292.5 50,297.5 56,292.5 62,297.5 68,292.5 74,297.5 80,292.5 86,297.5 92,292.5 98,297.5 104,292.5 110,297.5 116,292.5 122,297.5 128,292.5 134,297.5 140,292.5 146,297.5 152,292.5 158,297.5 164,292.5 170,297.5 176,292.5 182,297.5 188,292.5 194,297.5 200,292.5 206,297.5 212,292.5 218,297.5 224,292.5 230,297.5 236,292.5 242,297.5 248,292.5 254,297.5 260,292.5 266,297.5 272,292.5 278,297.5 284,292.5 290,297.5 296,292.5 302,297.5 308,292.5 314,297.5 320,292.5 326,297.5 332,292.5 338,297.5 344,292.5 350,297.5 356,292.5 362,297.5 368,292.5 374,297.5 380,292.5 386,297.5 392,292.5 398,297.5 404,292.5 410,297.5 416,292.5 422,297.5 428,292.5 434,297.5 440,292.5 446,297.5 452,292.5 458,297.5 464,292.5 470,297.5 476,292.5 482,297.5 488,292.5 494,297.5 500,292.5 506,297.5 512,292.5 518,297.5 524,292.5 530,297.5 536,292.5 542,297.5 548,292.5 554,297.5 540,292.5" 
+        fill="none" stroke="#3a2010" stroke-width="1.5" opacity="0.7" clip-path="url(#clip17)"/>
+
+  <rect x="20" y="507" width="520" height="5"  fill="#5a3010" opacity="0.8" clip-path="url(#clip17)"/>
+  <rect x="20" y="518.7" width="520" height="4" fill="#3a2010" opacity="0.6" clip-path="url(#clip17)"/>
+  <path d="M20,510.90000000000003 20,510.90000000000003 26,515.9000000000001 32,510.90000000000003 38,515.9000000000001 44,510.90000000000003 50,515.9000000000001 56,510.90000000000003 62,515.9000000000001 68,510.90000000000003 74,515.9000000000001 80,510.90000000000003 86,515.9000000000001 92,510.90000000000003 98,515.9000000000001 104,510.90000000000003 110,515.9000000000001 116,510.90000000000003 122,515.9000000000001 128,510.90000000000003 134,515.9000000000001 140,510.90000000000003 146,515.9000000000001 152,510.90000000000003 158,515.9000000000001 164,510.90000000000003 170,515.9000000000001 176,510.90000000000003 182,515.9000000000001 188,510.90000000000003 194,515.9000000000001 200,510.90000000000003 206,515.9000000000001 212,510.90000000000003 218,515.9000000000001 224,510.90000000000003 230,515.9000000000001 236,510.90000000000003 242,515.9000000000001 248,510.90000000000003 254,515.9000000000001 260,510.90000000000003 266,515.9000000000001 272,510.90000000000003 278,515.9000000000001 284,510.90000000000003 290,515.9000000000001 296,510.90000000000003 302,515.9000000000001 308,510.90000000000003 314,515.9000000000001 320,510.90000000000003 326,515.9000000000001 332,510.90000000000003 338,515.9000000000001 344,510.90000000000003 350,515.9000000000001 356,510.90000000000003 362,515.9000000000001 368,510.90000000000003 374,515.9000000000001 380,510.90000000000003 386,515.9000000000001 392,510.90000000000003 398,515.9000000000001 404,510.90000000000003 410,515.9000000000001 416,510.90000000000003 422,515.9000000000001 428,510.90000000000003 434,515.9000000000001 440,510.90000000000003 446,515.9000000000001 452,510.90000000000003 458,515.9000000000001 464,510.90000000000003 470,515.9000000000001 476,510.90000000000003 482,515.9000000000001 488,510.90000000000003 494,515.9000000000001 500,510.90000000000003 506,515.9000000000001 512,510.90000000000003 518,515.9000000000001 524,510.90000000000003 530,515.9000000000001 536,510.90000000000003 542,515.9000000000001 548,510.90000000000003 554,515.9000000000001 540,510.90000000000003" 
+        fill="none" stroke="#2a1808" stroke-width="1.5" opacity="0.7" clip-path="url(#clip17)"/>
+
+  <!-- Рамка чехла — оранжевая -->
+  <rect x="20" y="20" width="520" height="740" rx="52" fill="none" stroke="#c86820" stroke-width="3"/>
+
+  <!-- Блок камеры — оранжевая рамка, шире для 17 Pro -->
+  <rect x="45" y="50" width="245" height="215" rx="40" fill="#c86820" stroke="#d07828" stroke-width="1"/>
+  <rect x="49" y="54" width="237" height="207" rx="37" fill="#1a1a1a"/>
+
+  <!-- 3 камеры -->
+  <circle cx="123" cy="128" r="54" fill="#0d0d0d" stroke="#2a2a2a" stroke-width="1.5"/>
+  <circle cx="123" cy="128" r="40" fill="#080808"/>
+  <circle cx="123" cy="128" r="24" fill="#0f0f12"/>
+  <circle cx="123" cy="128" r="11" fill="#1a1a1e"/>
+  <circle cx="107" cy="112" r="5" fill="#fff" opacity="0.1"/>
+
+  <circle cx="223" cy="128" r="54" fill="#0d0d0d" stroke="#2a2a2a" stroke-width="1.5"/>
+  <circle cx="223" cy="128" r="40" fill="#080808"/>
+  <circle cx="223" cy="128" r="24" fill="#0f0f12"/>
+  <circle cx="223" cy="128" r="11" fill="#1a1a1e"/>
+  <circle cx="207" cy="112" r="5" fill="#fff" opacity="0.1"/>
+
+  <circle cx="173" cy="218" r="46" fill="#0d0d0d" stroke="#2a2a2a" stroke-width="1.5"/>
+  <circle cx="173" cy="218" r="34" fill="#080808"/>
+  <circle cx="173" cy="218" r="20" fill="#0f0f12"/>
+  <circle cx="173" cy="218" r="9" fill="#1a1a1e"/>
+
+  <!-- Вспышка + LiDAR -->
+  <circle cx="255" cy="215" r="13" fill="#1a1a1a" stroke="#333" stroke-width="1"/>
+  <circle cx="255" cy="215" r="8" fill="#222"/>
+  <circle cx="255" cy="245" r="8" fill="#1a1a1a" stroke="#333" stroke-width="1"/>
+
+  <!-- Логотип PITAKA -->
+  <text x="280" y="700" 
+        font-family="'Helvetica Neue',Arial,sans-serif" 
+        font-size="20" font-weight="400" letter-spacing="8"
+        fill="#c86820" text-anchor="middle" opacity="0.9">PITAKA</text>
+
+  <!-- Кнопки — оранжевые -->
+  <rect x="14" y="200" width="8" height="45" rx="4" fill="#b05818" stroke="#c86820" stroke-width="0.5"/>
+  <rect x="14" y="260" width="8" height="70" rx="4" fill="#b05818" stroke="#c86820" stroke-width="0.5"/>
+  <rect x="538" y="220" width="8" height="80" rx="4" fill="#b05818" stroke="#c86820" stroke-width="0.5"/>
+  <!-- Camera Control -->
+  <rect x="538" y="330" width="8" height="50" rx="4" fill="#b05818" stroke="#c86820" stroke-width="0.5"/>
 </svg>
