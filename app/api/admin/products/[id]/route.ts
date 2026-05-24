@@ -54,6 +54,7 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
       isNew,
       isFeatured,
       isHit,
+      inStock,
       seoTitle,
       seoDesc,
       images,
@@ -104,6 +105,7 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
           isNew,
           isFeatured,
           isHit,
+          inStock: inStock !== undefined ? inStock : true,
           seoTitle,
           seoDesc,
         }

@@ -90,6 +90,7 @@ export async function POST(request: NextRequest) {
       isNew,
       isFeatured,
       isHit,
+      inStock,
       seoTitle,
       seoDesc,
       images,
@@ -114,6 +115,7 @@ export async function POST(request: NextRequest) {
         isNew,
         isFeatured,
         isHit,
+        inStock: inStock !== undefined ? inStock : true,
         seoTitle,
         seoDesc,
         images: {
