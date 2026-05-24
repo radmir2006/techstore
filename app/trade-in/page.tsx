@@ -8,7 +8,7 @@ import { Footer } from '@/components/Footer'
 import { cn, normalizePhone } from '@/lib/utils'
 import toast from 'react-hot-toast'
 
-const brands = ['Apple', 'Samsung', 'Xiaomi', 'Huawei', 'Google', 'OnePlus', 'Другой']
+const brands = ['Apple', 'Samsung', 'Google', 'OnePlus', 'Другой']
 const conditions = [
   { value: 'excellent', label: 'Отличное — как новое' },
   { value: 'good', label: 'Хорошее — мелкие царапины' },
