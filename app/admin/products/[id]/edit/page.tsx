@@ -24,6 +24,7 @@ interface Product {
   isNew: boolean
   isFeatured: boolean
   isHit: boolean
+  inStock: boolean
   seoTitle: string
   seoDesc: string
   images: Array<{ id: string; url: string; sortOrder: number; isMain: boolean }>
@@ -68,6 +69,7 @@ export default function EditProductPage() {
     isNew: false,
     isFeatured: false,
     isHit: false,
+    inStock: true,
     seoTitle: '',
     seoDesc: '',
   })
@@ -106,6 +108,7 @@ export default function EditProductPage() {
           isNew: productData.isNew,
           isFeatured: productData.isFeatured,
           isHit: productData.isHit,
+          inStock: productData.inStock !== undefined ? productData.inStock : true,
           seoTitle: productData.seoTitle || '',
           seoDesc: productData.seoDesc || '',
         })
