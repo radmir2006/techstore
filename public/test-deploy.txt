@@ -1,0 +1,2 @@
+Deploy test - version 2.0.1
+Admin panel should be available at /admin/login
