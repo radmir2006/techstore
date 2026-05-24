@@ -29,7 +29,6 @@ const categories = [
   { name: 'MacBook', slug: 'mac' },
   { name: 'AirPods', slug: 'airpods' },
   { name: 'Apple Watch', slug: 'apple-watch' },
-  { name: 'Аксессуары', slug: 'accessories' },
 ]
 
 export function Header() {
