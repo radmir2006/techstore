@@ -21,6 +21,7 @@ interface Product {
   variants?: { color?: string; memory?: string; stock: number }[]
   isNew?: boolean
   isHit?: boolean
+  inStock?: boolean
   characteristics?: { name: string; value: string }[]
 }
 

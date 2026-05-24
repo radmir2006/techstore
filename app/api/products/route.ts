@@ -40,7 +40,7 @@ export async function GET(request: NextRequest) {
   }
 
   if (inStock) {
-    where.stocks = { some: { quantity: { gt: 0 } } }
+    where.inStock = true
   }
 
   if (isNew) {
@@ -116,6 +116,7 @@ export async function GET(request: NextRequest) {
       variants: p.variants,
       isNew: p.isNew,
       isHit: p.isHit,
+      inStock: p.inStock,
       stock: p.stocks.reduce((sum, s) => sum + s.quantity, 0),
     }))
 
