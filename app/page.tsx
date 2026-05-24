@@ -102,20 +102,20 @@ export default async function HomePage() {
       <main className="flex-1">
         {/* Hero Banner */}
         {heroBanner && (
-          <section className="container-custom py-4 md:py-6">
+          <section className="container-custom py-3 md:py-4">
             <HeroBanner banner={heroBanner} />
           </section>
         )}
 
         {/* Categories */}
-        <section className="container-custom py-4 md:py-6">
+        <section className="container-custom py-3 md:py-4">
           <h2 className="section-title mb-4">Категории</h2>
           <CategoryGrid categories={data.categories} />
         </section>
 
         {/* Featured Products - ПОДНЯТО ВЫШЕ */}
         {data.featuredProducts.length > 0 && (
-          <section className="container-custom py-6 md:py-8">
+          <section className="container-custom py-4 md:py-6">
             <ProductGrid 
               products={data.featuredProducts} 
               title="Популярные товары"
@@ -124,14 +124,14 @@ export default async function HomePage() {
         )}
 
         {/* Trade-in */}
-        <LazySection className="container-custom py-8 md:py-12 mt-6 md:mt-8">
+        <LazySection className="container-custom py-4 md:py-6">
           <TradeInBlock />
         </LazySection>
 
         {/* New Products */}
         {data.newProducts.length > 0 && (
           <LazySection 
-            className="container-custom py-8 md:py-12 mt-6 md:mt-8"
+            className="container-custom py-4 md:py-6"
             fallback={<ProductGridSkeleton count={8} />}
           >
             <ProductGrid 
@@ -142,19 +142,19 @@ export default async function HomePage() {
         )}
 
         {/* IMEI Check */}
-        <LazySection className="container-custom py-8 md:py-12 mt-6 md:mt-8">
+        <LazySection className="container-custom py-4 md:py-6">
           <ImeiCheckBlock />
         </LazySection>
 
         {/* Hit Products removed */}
 
         {/* Features */}
-        <LazySection className="container-custom py-8 md:py-12 mt-6 md:mt-8">
+        <LazySection className="container-custom py-4 md:py-6">
           <Features />
         </LazySection>
 
         {/* SEO Text */}
-        <section className="container-custom py-8 md:py-12">
+        <section className="container-custom py-6 md:py-8">
           <div className="bg-gray-50 rounded-2xl p-6 md:p-8 border border-gray-200">
             <h2 className="text-xl md:text-2xl font-bold mb-6 text-gray-900">
               Интернет-магазин техники Apple — TechStore
