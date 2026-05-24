@@ -49,6 +49,21 @@
     @apply px-4 py-2 text-xs;
   }
 
+  /* Force category image to contain - v2.0 */
+  .category-image {
+    object-fit: contain !important;
+    padding: 1rem !important;
+  }
+
+  /* Force product card button alignment - v2.0 */
+  .product-price-block {
+    min-height: 3rem !important;
+  }
+
+  .product-old-price {
+    height: 1.25rem !important;
+  }
+
   .btn-lg {
     @apply px-8 py-4 text-base;
   }

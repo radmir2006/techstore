@@ -191,12 +191,12 @@ export const ProductCard = memo(function ProductCard({ product, showQuickBuy = t
 
         {/* Price & Stock */}
         <div className="flex items-end justify-between mb-3">
-          <div className="min-h-[3rem]">
+          <div className="product-price-block">
             <div className="text-lg font-semibold">
               {formatPrice(product.price)}
             </div>
             {/* Резервируем место для старой цены, даже если её нет */}
-            <div className="text-sm h-5">
+            <div className="product-old-price text-sm">
               {hasDiscount ? (
                 <span className="text-gray-400 line-through">
                   {formatPrice(product.oldPrice!)}

@@ -49,7 +49,7 @@ export const CategoryGrid = memo(function CategoryGrid({ categories }: CategoryG
               alt={category.name}
               fill
               sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw"
-              className="group-hover:scale-105 transition-transform duration-300 object-contain p-4"
+              className="category-image group-hover:scale-105 transition-transform duration-300"
               quality={80}
               priority={index < 3}
             />
