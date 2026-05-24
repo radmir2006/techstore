@@ -57,9 +57,11 @@ export const CategoryGrid = memo(function CategoryGrid({ categories }: CategoryG
             <div className="absolute inset-0 bg-gradient-to-br from-gray-200 to-gray-100" />
           )}
           <div className="absolute bottom-0 left-0 right-0 p-3 md:p-4">
-            <h3 className="text-gray-900 text-sm md:text-base font-semibold drop-shadow-sm">
-              {category.name}
-            </h3>
+            <div className="bg-white/95 backdrop-blur-sm px-3 py-2 rounded-lg inline-block">
+              <h3 className="text-gray-900 text-sm md:text-base font-semibold">
+                {category.name}
+              </h3>
+            </div>
           </div>
         </Link>
       ))}
