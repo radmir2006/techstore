@@ -2,10 +2,8 @@ import { prisma } from '@/lib/prisma'
 import { notFound } from 'next/navigation'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
-import { ProductGallery } from '@/components/ProductGallery'
-import { ProductInfo } from '@/components/ProductInfo'
+import { ProductPageClient } from '@/components/ProductPageClient'
 import { ProductTabs } from '@/components/ProductTabs'
-import { RelatedProducts } from '@/components/RelatedProducts'
 import { ProductGrid } from '@/components/ProductGrid'
 
 export const dynamic = 'force-dynamic'
@@ -161,13 +159,7 @@ export default async function ProductPage({ params }: { params: { slug: string }
 
         {/* Product Detail */}
         <div className="container-custom py-6 md:py-10">
-          <div className="grid md:grid-cols-2 gap-8 md:gap-12">
-            {/* Gallery */}
-            <ProductGallery images={product.images} productName={product.name} />
-
-            {/* Info */}
-            <ProductInfo product={transformedProduct} />
-          </div>
+          <ProductPageClient product={transformedProduct} />
 
           {/* Tabs */}
           <div className="mt-12">

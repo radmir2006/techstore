@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { ArrowLeft, Plus, X, Save } from 'lucide-react'
 import { SafeButton } from '@/components/admin/SafeButton'
 import toast from 'react-hot-toast'
+import { getColorCode } from '@/lib/colorMap'
 
 interface FormData {
   name: string
@@ -167,9 +168,16 @@ export default function NewProductPage() {
   }, [])
 
   const updateVariant = useCallback((id: string, field: keyof VariantItem, value: any) => {
-    setVariants(prev => prev.map(variant => 
-      variant.id === id ? { ...variant, [field]: value } : variant
-    ))
+    setVariants(prev => prev.map(variant => {
+      if (variant.id !== id) return variant
+      const updated = { ...variant, [field]: value }
+      // Auto-fill colorCode when color name is typed
+      if (field === 'color' && typeof value === 'string') {
+        const code = getColorCode(value)
+        if (code) updated.colorCode = code
+      }
+      return updated
+    }))
   }, [])
 
   // Управление характеристиками
@@ -455,14 +463,28 @@ export default function NewProductPage() {
                   onChange={(e) => updateVariant(variant.id, 'colorCode', e.target.value)}
                   placeholder="#000000"
                   className="px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  style={variant.colorCode ? { borderLeftColor: variant.colorCode, borderLeftWidth: 4 } : {}}
                 />
-                <input
-                  type="text"
+                <select
                   value={variant.memory}
                   onChange={(e) => updateVariant(variant.id, 'memory', e.target.value)}
-                  placeholder="Память"
                   className="px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
+                >
+                  <option value="">Память</option>
+                  <option value="64 ГБ">64 ГБ</option>
+                  <option value="128 ГБ">128 ГБ</option>
+                  <option value="256 ГБ">256 ГБ</option>
+                  <option value="512 ГБ">512 ГБ</option>
+                  <option value="1 ТБ">1 ТБ</option>
+                  <option value="2 ТБ">2 ТБ</option>
+                  <option value="42 мм">42 мм</option>
+                  <option value="46 мм">46 мм</option>
+                  <option value="8 ГБ / 256 ГБ">8 ГБ / 256 ГБ</option>
+                  <option value="8 ГБ / 512 ГБ">8 ГБ / 512 ГБ</option>
+                  <option value="16 ГБ / 512 ГБ">16 ГБ / 512 ГБ</option>
+                  <option value="Без ANC">Без ANC</option>
+                  <option value="С ANC">С ANC</option>
+                </select>
                 <select
                   value={variant.simType}
                   onChange={(e) => updateVariant(variant.id, 'simType', e.target.value)}

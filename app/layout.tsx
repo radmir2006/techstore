@@ -6,8 +6,8 @@ import { Providers } from '@/components/Providers'
 const inter = Inter({ subsets: ['latin', 'cyrillic'] })
 
 export const metadata: Metadata = {
-  title: 'TechStore - Интернет-магазин электроники',
-  description: 'Купить смартфоны, ноутбуки, планшеты и аксессуары с доставкой',
+  title: 'TechStore - Премиум магазин техники Apple',
+  description: 'Купить iPhone, iPad, MacBook, AirPods, Apple Watch с доставкой. Другие бренды под заказ.',
 }
 
 export const dynamic = 'force-dynamic'

@@ -63,18 +63,18 @@ function CatalogContent() {
   
   const slug = params.slug as string[]
   const slugMap: Record<string, string> = {
-    'smartphones': 'smartphones',
-    'apple': 'smartphones',
-    'tablets': 'tablets',
-    'laptops': 'laptops',
-    'audio': 'airpods',
-    'smart-home': 'apple-watch',
-    'iphone': 'smartphones',
-    'ipad': 'tablets',
-    'macbook': 'laptops',
+    'iphone': 'iphone',
+    'smartphones': 'iphone',
+    'ipad': 'ipad',
+    'tablets': 'ipad',
+    'mac': 'mac',
+    'macbook': 'mac',
+    'laptops': 'mac',
     'airpods': 'airpods',
+    'audio': 'airpods',
     'apple-watch': 'apple-watch',
-    'accessories': 'airpods',
+    'smart-home': 'apple-watch',
+    'accessories': 'accessories',
   }
   const rawSlug = slug?.[slug.length - 1] || slug?.[0] || ''
   const categorySlug = slugMap[rawSlug] || rawSlug
@@ -155,9 +155,9 @@ function CatalogContent() {
         const brandsData = await brandsRes.json()
 
         setProducts(productsData.products || [])
-        setTotalPages(productsData.pagination?.pages || 1)
-        setCategories(categoriesData || [])
-        setBrands(brandsData || [])
+        setTotalPages(productsData.pagination?.pages || productsData.pagination?.pages || Math.ceil((productsData.total || 0) / 20) || 1)
+        setCategories(categoriesData.categories || categoriesData || [])
+        setBrands(brandsData.brands || brandsData || [])
 
         if (categorySlug) {
           const cat = findCategory(categoriesData, categorySlug)

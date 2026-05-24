@@ -113,9 +113,9 @@ export default async function HomePage() {
           <CategoryGrid categories={data.categories} />
         </section>
 
-        {/* Featured Products */}
+        {/* Featured Products - ПОДНЯТО ВЫШЕ */}
         {data.featuredProducts.length > 0 && (
-          <section className="container-custom py-8 md:py-12 mt-6 md:mt-8">
+          <section className="container-custom py-6 md:py-8">
             <ProductGrid 
               products={data.featuredProducts} 
               title="Популярные товары"
@@ -157,17 +157,17 @@ export default async function HomePage() {
         <section className="container-custom py-8 md:py-12">
           <div className="bg-gray-50 rounded-2xl p-6 md:p-8 border border-gray-200">
             <h2 className="text-xl md:text-2xl font-bold mb-6 text-gray-900">
-              Интернет-магазин электроники TechStore
+              Интернет-магазин техники Apple — TechStore
             </h2>
             <div className="text-gray-600 space-y-4 text-sm md:text-base">
               <p>
-                TechStore — это современный интернет-магазин электроники и гаджетов, предлагающий широкий ассортимент оригинальной техники от ведущих мировых производителей. В нашем каталоге представлены смартфоны Apple iPhone, Samsung Galaxy, ноутбуки MacBook, iPad, а также разнообразные аксессуары и устройства для умного дома.
+                TechStore — это премиум интернет-магазин оригинальной техники Apple, предлагающий широкий ассортимент iPhone, iPad, MacBook, AirPods, Apple Watch и аксессуаров. Мы специализируемся на продуктах Apple и гарантируем подлинность всех товаров с официальной гарантией производителя.
               </p>
               <p>
-                Мы гарантируем подлинность всех товаров и предоставляем официальную гарантию производителя. Наша команда специалистов поможет вам подобрать технику под ваши задачи и бюджет, а быстрая доставка обеспечит получение заказа в кратчайшие сроки.
+                В нашем каталоге представлены новейшие модели iPhone 17, iPhone 16, MacBook Pro и Air, iPad Pro, AirPods Pro и Apple Watch Series. Техника других брендов (Samsung, Sony, Xiaomi и др.) доступна под индивидуальный заказ — свяжитесь с нами для уточнения деталей.
               </p>
               <p>
-                Воспользуйтесь услугой Trade-in и обменяйте старый смартфон на новый с выгодой до 50 000 рублей. Проверьте оригинальность любого устройства Apple по IMEI или серийному номеру на нашем сайте.
+                Наша команда специалистов поможет вам подобрать технику Apple под ваши задачи и бюджет, а быстрая доставка обеспечит получение заказа в кратчайшие сроки. Воспользуйтесь услугой Trade-in и обменяйте старый iPhone на новый с выгодой до 50 000 рублей. Проверьте оригинальность любого устройства Apple по IMEI или серийному номеру на нашем сайте.
               </p>
             </div>
           </div>

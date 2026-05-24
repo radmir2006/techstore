@@ -26,8 +26,9 @@ import { useCart } from '@/lib/cart-context'
 const categories = [
   { name: 'iPhone', slug: 'iphone' },
   { name: 'iPad', slug: 'ipad' },
-  { name: 'MacBook', slug: 'macbook' },
+  { name: 'MacBook', slug: 'mac' },
   { name: 'AirPods', slug: 'airpods' },
+  { name: 'Apple Watch', slug: 'apple-watch' },
   { name: 'Аксессуары', slug: 'accessories' },
 ]
 

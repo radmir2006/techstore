@@ -4,7 +4,7 @@ import { Package, Shield, Truck, Award } from 'lucide-react'
 
 export const metadata = {
   title: 'О компании - TechStore',
-  description: 'TechStore - надежный интернет-магазин оригинальной электроники и гаджетов',
+  description: 'TechStore - премиум магазин техники Apple. Другие бренды доступны под индивидуальный заказ.',
 }
 
 export default function AboutPage() {
@@ -18,7 +18,7 @@ export default function AboutPage() {
 
           <div className="prose max-w-none">
             <p className="text-lg text-gray-600 mb-6">
-              TechStore — это современный интернет-магазин оригинальной электроники и гаджетов от ведущих мировых производителей. Мы специализируемся на продаже смартфонов, планшетов, ноутбуков, наушников и аксессуаров премиум-класса.
+              TechStore — это премиум интернет-магазин оригинальной техники Apple. Мы специализируемся на продаже iPhone, iPad, MacBook, AirPods, Apple Watch и аксессуаров премиум-класса. Техника других брендов (Samsung, Sony, Xiaomi и др.) доступна под индивидуальный заказ.
             </p>
 
             <div className="grid md:grid-cols-2 gap-6 my-8">
@@ -59,7 +59,11 @@ export default function AboutPage() {
             <ul className="space-y-3 text-gray-600">
               <li className="flex items-start gap-2">
                 <span className="text-primary-600 mt-1">✓</span>
-                <span>Широкий ассортимент техники от Apple, Samsung и других ведущих брендов</span>
+                <span>Специализация на технике Apple — iPhone, iPad, MacBook, AirPods, Apple Watch</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-primary-600 mt-1">✓</span>
+                <span>Техника других брендов (Samsung, Sony, Xiaomi) доступна под индивидуальный заказ</span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-primary-600 mt-1">✓</span>

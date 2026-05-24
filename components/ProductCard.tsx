@@ -28,6 +28,7 @@ export const ProductCard = memo(function ProductCard({ product, showQuickBuy = t
   const [isAddingToCart, setIsAddingToCart] = useState(false)
   const [addedToCart, setAddedToCart] = useState(false)
   const [isAddingToWishlist, setIsAddingToWishlist] = useState(false)
+  const [isAddingToCompare, setIsAddingToCompare] = useState(false)
 
   const mainImage = product.images[0]?.url || '/placeholder.jpg'
   const secondImage = product.images[1]?.url
@@ -70,22 +71,42 @@ export const ProductCard = memo(function ProductCard({ product, showQuickBuy = t
     setIsAddingToWishlist(true)
     
     try {
-      await fetch('/api/wishlist', {
+      await fetch('/api/favorites', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ productId: product.id }),
       })
     } catch (error) {
-      console.error('Failed to add to wishlist:', error)
+      console.error('Failed to add to favorites:', error)
     } finally {
       setIsAddingToWishlist(false)
     }
   }
 
-  const handleCompare = (e: React.MouseEvent) => {
+  const handleCompare = async (e: React.MouseEvent) => {
     e.preventDefault()
     e.stopPropagation()
-    // Compare functionality
+    
+    if (isAddingToCompare) return
+    setIsAddingToCompare(true)
+    
+    try {
+      const res = await fetch('/api/compare', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ productId: product.id }),
+      })
+      
+      if (!res.ok) {
+        const data = await res.json()
+        alert(data.error || 'Не удалось добавить в сравнение')
+      }
+    } catch (error) {
+      console.error('Failed to add to compare:', error)
+      alert('Не удалось добавить в сравнение')
+    } finally {
+      setIsAddingToCompare(false)
+    }
   }
 
   return (
@@ -168,16 +189,21 @@ export const ProductCard = memo(function ProductCard({ product, showQuickBuy = t
         )}
 
         {/* Price & Stock */}
-        <div className="flex items-end justify-between">
-          <div>
+        <div className="flex items-end justify-between mb-3">
+          <div className="min-h-[3rem]">
             <div className="text-lg font-semibold">
               {formatPrice(product.price)}
             </div>
-            {hasDiscount && (
-              <div className="text-sm text-gray-400 line-through">
-                {formatPrice(product.oldPrice!)}
-              </div>
-            )}
+            {/* Резервируем место для старой цены, даже если её нет */}
+            <div className="text-sm h-5">
+              {hasDiscount ? (
+                <span className="text-gray-400 line-through">
+                  {formatPrice(product.oldPrice!)}
+                </span>
+              ) : (
+                <span className="invisible">placeholder</span>
+              )}
+            </div>
           </div>
           {!inStock && (
             <span className="text-xs text-gray-400">Нет в наличии</span>
@@ -186,7 +212,7 @@ export const ProductCard = memo(function ProductCard({ product, showQuickBuy = t
 
         {/* Actions */}
         {showQuickBuy && inStock && (
-          <div className="mt-3 flex gap-2">
+          <div className="flex gap-2">
             <button
               onClick={handleAddToCart}
               disabled={isAddingToCart || addedToCart}
@@ -213,7 +239,7 @@ export const ProductCard = memo(function ProductCard({ product, showQuickBuy = t
         )}
 
         {!showQuickBuy && inStock && (
-          <button className="btn-secondary btn-sm w-full mt-3">
+          <button className="btn-secondary btn-sm w-full">
             Купить в 1 клик
           </button>
         )}

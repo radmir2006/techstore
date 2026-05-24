@@ -13,11 +13,22 @@ interface ImageItem {
 interface ProductGalleryProps {
   images: ImageItem[]
   productName: string
+  activeIndex?: number
+  onIndexChange?: (index: number) => void
 }
 
-export function ProductGallery({ images, productName }: ProductGalleryProps) {
-  const [currentIndex, setCurrentIndex] = useState(0)
+export function ProductGallery({ images, productName, activeIndex, onIndexChange }: ProductGalleryProps) {
+  const [internalIndex, setInternalIndex] = useState(0)
   const [isZoomed, setIsZoomed] = useState(false)
+
+  // Use controlled index if provided, otherwise internal
+  const currentIndex = activeIndex !== undefined ? activeIndex : internalIndex
+
+  const setCurrentIndex = (idx: number | ((prev: number) => number)) => {
+    const newIdx = typeof idx === 'function' ? idx(currentIndex) : idx
+    if (onIndexChange) onIndexChange(newIdx)
+    else setInternalIndex(newIdx)
+  }
 
   if (images.length === 0) {
     return (

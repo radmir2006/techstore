@@ -33,9 +33,10 @@ interface ProductInfoProps {
     }[]
     characteristics: { name: string; value: string; group?: string | null }[]
   }
+  onColorChange?: (color: string) => void
 }
 
-export function ProductInfo({ product }: ProductInfoProps) {
+export function ProductInfo({ product, onColorChange }: ProductInfoProps) {
   const router = useRouter()
   const { data: session } = useSession()
   const { addItem } = useCart()
@@ -116,12 +117,11 @@ export function ProductInfo({ product }: ProductInfoProps) {
       const res = await fetch('/api/favorites')
       if (res.ok) {
         const data = await res.json()
-        const isInFavorites = data.favorites?.some((fav: any) => fav.productId === product.id)
-        setIsFavorite(isInFavorites)
+        // API returns array directly
+        const favArray = Array.isArray(data) ? data : (data.favorites || [])
+        setIsFavorite(favArray.some((fav: any) => fav.productId === product.id))
       }
-    } catch (error) {
-      // Ignore error
-    }
+    } catch {}
   }
 
   const checkCompareStatus = async () => {
@@ -129,12 +129,11 @@ export function ProductInfo({ product }: ProductInfoProps) {
       const res = await fetch('/api/compare')
       if (res.ok) {
         const data = await res.json()
-        const isInCompareList = data.compareItems?.some((item: any) => item.productId === product.id)
-        setIsInCompare(isInCompareList)
+        // API returns array directly
+        const cmpArray = Array.isArray(data) ? data : (data.compareItems || [])
+        setIsInCompare(cmpArray.some((item: any) => item.productId === product.id))
       }
-    } catch (error) {
-      // Ignore error
-    }
+    } catch {}
   }
 
   const handleAddToCart = async () => {
@@ -304,7 +303,10 @@ export function ProductInfo({ product }: ProductInfoProps) {
                   return (
                     <button
                       key={color}
-                      onClick={() => setSelectedColor(color)}
+                      onClick={() => {
+                      setSelectedColor(color)
+                      onColorChange?.(color)
+                    }}
                       disabled={!available}
                       className={cn(
                         "flex items-center gap-2 px-4 py-2 text-sm rounded-lg border transition-colors",
