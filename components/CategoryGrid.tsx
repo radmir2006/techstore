@@ -56,8 +56,7 @@ export const CategoryGrid = memo(function CategoryGrid({ categories }: CategoryG
           ) : (
             <div className="absolute inset-0 bg-gradient-to-br from-gray-200 to-gray-100" />
           )}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-          <div className="absolute bottom-0 left-0 right-0 p-3 md:p-4">
+          <div className="absolute bottom-0 left-0 right-0 p-3 md:p-4 bg-gradient-to-t from-black/80 to-transparent">
             <h3 className="text-white text-sm md:text-base font-medium">
               {category.name}
             </h3>

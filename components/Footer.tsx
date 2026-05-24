@@ -33,7 +33,7 @@ export function Footer() {
               TechStore
             </Link>
             <p className="text-gray-600 text-sm mb-6 max-w-xs">
-              Премиум магазин техники Apple. Другие бренды (Samsung, Sony, Xiaomi) доступны под индивидуальный заказ.
+              Премиум магазин техники Apple. Другие бренды (Samsung, Sony, Google) доступны под индивидуальный заказ.
             </p>
             <div className="space-y-3 text-sm">
               <a href="tel:+78001234567" className="flex items-center gap-2 text-gray-600 hover:text-gray-900">

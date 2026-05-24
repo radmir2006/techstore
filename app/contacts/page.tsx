@@ -60,7 +60,7 @@ export default async function ContactsPage() {
                   <div className="mt-6 pt-6 border-t border-gray-200">
                     <p className="text-sm text-gray-600">
                       <strong className="text-gray-900">Индивидуальный заказ:</strong><br />
-                      Техника других брендов (Samsung, Sony, Xiaomi и др.) доступна под заказ. Свяжитесь с нами для уточнения деталей.
+                      Техника других брендов (Samsung, Sony, Google и др.) доступна под заказ. Свяжитесь с нами для уточнения деталей.
                     </p>
                   </div>
                 </div>

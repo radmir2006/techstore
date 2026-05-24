@@ -18,7 +18,7 @@ export default function AboutPage() {
 
           <div className="prose max-w-none">
             <p className="text-lg text-gray-600 mb-6">
-              TechStore — это премиум интернет-магазин оригинальной техники Apple. Мы специализируемся на продаже iPhone, iPad, MacBook, AirPods, Apple Watch и аксессуаров премиум-класса. Техника других брендов (Samsung, Sony, Xiaomi и др.) доступна под индивидуальный заказ.
+              TechStore — это премиум интернет-магазин оригинальной техники Apple. Мы специализируемся на продаже iPhone, iPad, MacBook, AirPods, Apple Watch и аксессуаров премиум-класса. Техника других брендов (Samsung, Sony, Google и др.) доступна под индивидуальный заказ.
             </p>
 
             <div className="grid md:grid-cols-2 gap-6 my-8">
@@ -63,7 +63,7 @@ export default function AboutPage() {
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-primary-600 mt-1">✓</span>
-                <span>Техника других брендов (Samsung, Sony, Xiaomi) доступна под индивидуальный заказ</span>
+                <span>Техника других брендов (Samsung, Sony, Google) доступна под индивидуальный заказ</span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-primary-600 mt-1">✓</span>
