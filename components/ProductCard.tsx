@@ -24,6 +24,7 @@ interface ProductCardProps {
 }
 
 export const ProductCard = memo(function ProductCard({ product, showQuickBuy = true, priority = false }: ProductCardProps) {
+  // v2.0 - Fixed button heights with reserved space for old price
   const [isHovered, setIsHovered] = useState(false)
   const [isAddingToCart, setIsAddingToCart] = useState(false)
   const [addedToCart, setAddedToCart] = useState(false)

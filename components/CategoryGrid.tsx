@@ -16,6 +16,7 @@ interface CategoryGridProps {
 }
 
 export const CategoryGrid = memo(function CategoryGrid({ categories }: CategoryGridProps) {
+  // v2.0 - Fixed image display with object-contain
   // Проверяем что categories является массивом
   if (!Array.isArray(categories)) {
     console.error('CategoryGrid: categories is not an array:', categories)
