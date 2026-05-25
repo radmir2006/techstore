@@ -8,6 +8,10 @@ const inter = Inter({ subsets: ['latin', 'cyrillic'] })
 export const metadata: Metadata = {
   title: 'TechStore - Премиум магазин техники Apple',
   description: 'Купить iPhone, iPad, MacBook, AirPods, Apple Watch с доставкой. Другие бренды под заказ.',
+  icons: {
+    icon: '/icon.svg',
+    shortcut: '/icon.svg',
+  },
 }
 
 export const dynamic = 'force-dynamic'

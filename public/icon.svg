@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <!-- Белый фон с лёгким скруглением -->
+  <rect width="32" height="32" rx="6" fill="#ffffff"/>
+  <!-- Тонкая рамка -->
+  <rect width="32" height="32" rx="6" fill="none" stroke="#e0e0e0" stroke-width="1"/>
+  <!-- Буква T -->
+  <text
+    x="3"
+    y="24"
+    font-family="'Helvetica Neue', Helvetica, Arial, sans-serif"
+    font-size="20"
+    font-weight="700"
+    fill="#111111"
+    letter-spacing="-1"
+  >TS</text>
+</svg>
